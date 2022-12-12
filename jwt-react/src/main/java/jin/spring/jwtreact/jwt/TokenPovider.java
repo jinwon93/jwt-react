@@ -7,9 +7,12 @@ import io.jsonwebtoken.security.Keys;
 import jin.spring.jwtreact.dto.security.TokenDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import javax.swing.*;
@@ -38,7 +41,7 @@ public class TokenPovider {
     }
 
 
-
+    //token을 만드는 메소드!
     public TokenDto generateTokenDto(Authentication authentication) {
 
         String authorities = authentication.getAuthorities().stream()
@@ -63,10 +66,10 @@ public class TokenPovider {
                 .build();
     }
 
-
+    //token을 받았을대 token의 인증을 꺼내는 메소드!
     public Authentication getAuthentication(String accessToken) {
 
-        Claims claims = paresClaims(accessToken);
+        Claims claims = parseClaims(accessToken);
 
         if (claims.get(AUTHORITIES_KEY) == null){
             throw  new RuntimeException("권한 정보가 없는 토큰입니다");
@@ -78,9 +81,13 @@ public class TokenPovider {
                         .collect(Collectors.toList());
 
 
-        return  new usernamePa
+        UserDetails principal = new User(claims.getSubject() , "" , authorities);
+
+        return new UsernamePasswordAuthenticationToken(principal , "" , authorities);
     }
-    public boolean validateToken(String token) {
+
+    //검증증
+   public boolean validateToken(String token) {
 
         try {
             Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);
@@ -97,7 +104,8 @@ public class TokenPovider {
         return false;
     }
 
-    private Claims paresClaims(String accessToken) {
+    //token을 claims형태로 만드는 메소드
+    private Claims parseClaims(String accessToken) {
         try {
             return Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(accessToken).getBody();
         }catch (ExpiredJwtException e) {
