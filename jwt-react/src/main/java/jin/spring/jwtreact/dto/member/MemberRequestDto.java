@@ -31,7 +31,7 @@ public class MemberRequestDto {
                 .build();
     }
 
-
+    //Id와 password가 일치하는지 검증하는 메소드
     public UsernamePasswordAuthenticationToken toAUthentication() {
         return  new UsernamePasswordAuthenticationToken(email , password);
     }
