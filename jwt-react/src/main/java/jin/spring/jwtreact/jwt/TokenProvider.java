@@ -15,17 +15,15 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
-import javax.swing.*;
 import java.security.Key;
 import java.util.Arrays;
-import java.util.Base64;
 import java.util.Collection;
 import java.util.Date;
 import java.util.stream.Collectors;
 
 @Component
 @Slf4j
-public class TokenPovider {
+public class TokenProvider {
 
 
     private static  final String AUTHORITIES_KEY = "auth";
@@ -34,7 +32,7 @@ public class TokenPovider {
     private final Key key;
 
 
-    public TokenPovider(@Value("jwt.secret") String secretKey) {
+    public TokenProvider(@Value("jwt.secret") String secretKey) {
 
         byte[] keyBytes = Decoders.BASE64.decode(secretKey);
         this.key = Keys.hmacShaKeyFor(keyBytes);

@@ -3,7 +3,7 @@ package jin.spring.jwtreact.config;
 
 import jin.spring.jwtreact.jwt.JwtAccessDeniedHandler;
 import jin.spring.jwtreact.jwt.JwtAuthentiocaionEntryPoint;
-import jin.spring.jwtreact.jwt.TokenPovider;
+import jin.spring.jwtreact.jwt.TokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,7 +21,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class WebSecurityConfig {
 
-    private final TokenPovider tokenPovider;
+    private final TokenProvider tokenPovider;
     private final JwtAuthentiocaionEntryPoint jwtAuthentiocaionEntryPoint;
     private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
 

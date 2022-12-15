@@ -2,7 +2,7 @@ package jin.spring.jwtreact.config;
 
 
 import jin.spring.jwtreact.jwt.JwtFilter;
-import jin.spring.jwtreact.jwt.TokenPovider;
+import jin.spring.jwtreact.jwt.TokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.config.annotation.SecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -12,7 +12,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @RequiredArgsConstructor
 public class JwtSecurityConfig  extends SecurityConfigurerAdapter<DefaultSecurityFilterChain , HttpSecurity> {
 
-    private final TokenPovider tokenPovider;
+    private final TokenProvider tokenPovider;
 
     @Override
     public void  configure(HttpSecurity http) {
