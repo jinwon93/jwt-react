@@ -3,11 +3,14 @@ package jin.spring.jwtreact.service;
 
 import jin.spring.jwtreact.dto.member.MemberRequestDto;
 import jin.spring.jwtreact.dto.member.MemberResponseDto;
+import jin.spring.jwtreact.dto.security.TokenDto;
 import jin.spring.jwtreact.entity.Member;
 import jin.spring.jwtreact.jwt.TokenProvider;
 import jin.spring.jwtreact.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -34,5 +37,15 @@ public class AuthService {
 
         Member member = requestDto.toMember(passwordEncoder);
         return  MemberResponseDto.of(memberRepository.save(member));
+    }
+
+
+    public TokenDto login(MemberRequestDto requestDto) {
+
+        UsernamePasswordAuthenticationToken authenticationToken = requestDto.toAUthentication();
+
+        Authentication authentication = managerBuilder.getObject().authenticate(authenticationToken);
+
+        return tokenProvider.generateTokenDto(authentication);
     }
 }
