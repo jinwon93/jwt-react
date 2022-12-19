@@ -3,6 +3,7 @@ package jin.spring.jwtreact.controller;
 
 import jin.spring.jwtreact.dto.member.MemberRequestDto;
 import jin.spring.jwtreact.dto.member.MemberResponseDto;
+import jin.spring.jwtreact.dto.security.TokenDto;
 import jin.spring.jwtreact.service.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -24,4 +25,12 @@ public class AuthController {
     public ResponseEntity<MemberResponseDto> signup(@RequestBody MemberRequestDto requestDto) {
         return ResponseEntity.ok(authService.signup(requestDto));
     }
+
+
+    @PostMapping("/login")
+    public ResponseEntity<TokenDto> login(@RequestBody MemberRequestDto  requestDto) {
+        return ResponseEntity.ok(authService.login(requestDto));
+    }
+
+
 }

@@ -36,7 +36,7 @@ public class MemberService {
     }
 
     @Transactional
-    public MemberResponseDto changeMemberPassword(String email , String exPassword , String newPassword) {
+    public MemberResponseDto changeMemberPassword(String exPassword , String newPassword) {
 
         Member member = memberRepository.findById(SecurityUtil.getCurrentMemberId()).orElseThrow( ()-> new RuntimeException("로그인 유저 정보가 없습니다"));
         if (!passwordEncoder.matches(exPassword , member.getPassword())) {
