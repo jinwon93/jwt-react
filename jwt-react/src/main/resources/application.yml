@@ -2,7 +2,7 @@ spring:
   profiles:
     active: local
   server:
-    port: 9090
+    port: 8081
 
   datasource:
     url: jdbc:mysql://localhost:3306/testjin?serverTimezone=UTC&characterEncoding=UTF-8
@@ -25,4 +25,4 @@ logging:
     com.tutorial: debug
 
 jwt:
-  secret: eyJhbGciOiJIUzI1NiJ9.eyJSb2xlIjoiQWRtaW4iLCJJc3N1ZXIiOiJJc3N1ZXIiLCJVc2VybmFtZSI6IkphdmFJblVzZSIsImV4cCI6MTY3MDU2MjI2MCwiaWF0IjoxNjcwNTYyMjYwfQ.rJpvMQjrdYtwOH7mfWk9sX2gGWZ-lYotBIegytUbvxY
+  secret:
