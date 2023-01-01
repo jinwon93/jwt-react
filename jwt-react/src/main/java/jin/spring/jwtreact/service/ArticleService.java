@@ -67,4 +67,20 @@ public class ArticleService {
                 .orElseThrow(() -> new RuntimeException("로그인 유저 정보가 없습니다."));
     }
 
+
+    @Transactional
+    public ArticleResponseDto changeArticle(Long id, String title, String body) {
+        Article article = authorizationArticleWriter(id);
+        return ArticleResponseDto.of(articleRepository.save(Article.changeArticle(article, title, body)), true);
+    }
+
+
+    public Article authorizationArticleWriter(Long id) {
+        Member member = isMemberCurrent();
+        Article article = articleRepository.findById(id).orElseThrow(() -> new RuntimeException("글이 없습니다."));
+        if (!article.getMember().equals(member)) {
+            throw new RuntimeException("로그인한 유저와 작성 유저가 같지 않습니다.");
+        }
+        return article;
+    }
 }
