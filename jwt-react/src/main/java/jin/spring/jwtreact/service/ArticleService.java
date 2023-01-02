@@ -62,10 +62,7 @@ public class ArticleService {
         return ArticleResponseDto.of(articleRepository.save(article), true);
     }
 
-    public Member isMemberCurrent(){
-        return  memberRepository.findById(SecurityUtil.getCurrentMemberId())
-                .orElseThrow(() -> new RuntimeException("로그인 유저 정보가 없습니다."));
-    }
+
 
 
     @Transactional
@@ -74,6 +71,18 @@ public class ArticleService {
         return ArticleResponseDto.of(articleRepository.save(Article.changeArticle(article, title, body)), true);
     }
 
+
+    @Transactional
+    public  void  deleteArticle(Long id) {
+        Article article = authorizationArticleWriter(id);
+        articleRepository.delete(article);
+    }
+
+
+    public Member isMemberCurrent(){
+        return  memberRepository.findById(SecurityUtil.getCurrentMemberId())
+                .orElseThrow(() -> new RuntimeException("로그인 유저 정보가 없습니다."));
+    }
 
     public Article authorizationArticleWriter(Long id) {
         Member member = isMemberCurrent();
