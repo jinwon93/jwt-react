@@ -2,8 +2,10 @@ package jin.spring.jwtreact.controller;
 
 
 import jin.spring.jwtreact.dto.ArticleResponseDto;
+import jin.spring.jwtreact.dto.ChangeArticleRequestDto;
 import jin.spring.jwtreact.dto.CreateArticleRequestDto;
 import jin.spring.jwtreact.dto.PageResponseDto;
+import jin.spring.jwtreact.dto.member.ChangePasswordRequestDto;
 import jin.spring.jwtreact.service.ArticleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -34,4 +36,19 @@ public class ArticleController {
     public  ResponseEntity<ArticleResponseDto> createArticle(@RequestBody CreateArticleRequestDto request) {
         return ResponseEntity.ok(articleService.postArticle(request.getTitle() , request.getBody()));
     }
+
+    @GetMapping("/")
+    public ResponseEntity<ArticleResponseDto> getChangeArticle(@RequestParam(name = "id") Long id) {
+        return ResponseEntity.ok(articleService.oneArticle((id)));
+    }
+
+
+    @PutMapping("/")
+    public ResponseEntity<ArticleResponseDto> putChangeArticle(@RequestBody ChangeArticleRequestDto requestDto) {
+        return ResponseEntity.ok(articleService.changeArticle(
+                requestDto.getId() , requestDto.getTitle() , requestDto.getBody()
+        ));
+    }
+
+
 }
