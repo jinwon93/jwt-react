@@ -1,10 +1,7 @@
 package jin.spring.jwtreact.controller;
 
 
-import jin.spring.jwtreact.dto.ArticleResponseDto;
-import jin.spring.jwtreact.dto.ChangeArticleRequestDto;
-import jin.spring.jwtreact.dto.CreateArticleRequestDto;
-import jin.spring.jwtreact.dto.PageResponseDto;
+import jin.spring.jwtreact.dto.*;
 import jin.spring.jwtreact.dto.member.ChangePasswordRequestDto;
 import jin.spring.jwtreact.service.ArticleService;
 import lombok.RequiredArgsConstructor;
@@ -50,5 +47,10 @@ public class ArticleController {
         ));
     }
 
+    @DeleteMapping("/one")
+    public ResponseEntity<MessageDto> deleteArticle(@RequestParam(name = "id") Long id ){
+        articleService.deleteArticle(id);
+        return ResponseEntity.ok(new MessageDto("Success"));
+    }
 
 }
