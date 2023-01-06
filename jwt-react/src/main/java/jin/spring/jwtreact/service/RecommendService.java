@@ -1,6 +1,7 @@
 package jin.spring.jwtreact.service;
 
 
+import jin.spring.jwtreact.config.SecurityUtil;
 import jin.spring.jwtreact.dto.RecommendDto;
 import jin.spring.jwtreact.entity.Article;
 import jin.spring.jwtreact.entity.Member;
@@ -42,5 +43,28 @@ public class RecommendService {
             boolean result = recommends.stream().anyMatch(recommend -> recommend.getMember().equals(member));
             return  new RecommendDto(size , result);
         }
+    }
+
+    @Transactional
+    public  void  createRecommend(Long id) {
+        Member member = memberRepository.findById(
+                SecurityUtil.getCurrentMemberId()).orElseThrow(() -> new RuntimeException("로그인 유저 정보가 없습니다."));
+        Article article = articleRepository.findById(id).orElseThrow(() -> new RuntimeException("글이 없습니다."));
+
+        Recommend recommend = new Recommend(member , article);
+        recommendRepository.save(recommend);
+    }
+
+
+    @Transactional
+    public void  removeRecommend(Long id) {
+        Member member = memberRepository.findById(SecurityUtil.getCurrentMemberId()).orElseThrow(() -> new RuntimeException("로그인 유저 정보가 없습니다"));
+        Article article = articleRepository.findById(id).orElseThrow(() -> new RuntimeException("글이 없습니다."));
+        Recommend recommend = recommendRepository.findAllByArticle(article)
+                .stream()
+                .filter(r -> r.getMember().equals(member))
+                .findFirst()
+                .orElseThrow(() -> new RuntimeException("추천이 없습니다."));
+        recommendRepository.delete(recommend);
     }
 }
