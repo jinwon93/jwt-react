@@ -1,6 +1,7 @@
 package jin.spring.jwtreact.service;
 
 
+import jin.spring.jwtreact.config.SecurityUtil;
 import jin.spring.jwtreact.dto.CommentResponseDto;
 import jin.spring.jwtreact.entity.Article;
 import jin.spring.jwtreact.entity.Comment;
@@ -9,6 +10,7 @@ import jin.spring.jwtreact.repository.ArticleRepository;
 import jin.spring.jwtreact.repository.CommentRepository;
 import jin.spring.jwtreact.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
+import net.bytebuddy.asm.MemberAttributeExtension;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -65,5 +67,34 @@ public class CommentService {
                     .sorted(Comparator.comparing(CommentResponseDto::getCommentId))
                     .collect(Collectors.toList());
         }
+    }
+
+
+    @Transactional
+    public CommentResponseDto createComment (Long id,  String text {
+     Member member = memberRepository.findById(
+             SecurityUtil.getCurrentMemberId())
+             .orElseThrow(() -> new RuntimeException("로그인 유저 정보가 없습니다."));
+     Article article = articleRepository.findById(id).orElseThrow(() -> new RuntimeException("댓글이 없습니다"));
+
+     Comment comment = Comment.builder()
+             .text(text)
+             .article(article)
+             .member(member)
+             .build();
+
+     return CommentResponseDto.of(commentRepository.save(comment) , true);
+    }
+
+    @Transactional
+    public  void  removeComment (Long id) {
+        Member member = memberRepository.findById(
+                SecurityUtil.getCurrentMemberId()).orElseThrow(() -> new RuntimeException("로그인이 필요합니다"));
+        Comment comment = commentRepository.findById(id).orElseThrow(() -> new RuntimeException("댓글이 없습니다"));
+
+        if (!comment.getMember().equals(member)) {
+            throw new RuntimeException("작성작와 로그인 유저와 일치하지 않습니다");
+        }
+        commentRepository.delete(comment);
     }
 }
