@@ -10,7 +10,6 @@ import jin.spring.jwtreact.repository.ArticleRepository;
 import jin.spring.jwtreact.repository.CommentRepository;
 import jin.spring.jwtreact.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
-import net.bytebuddy.asm.MemberAttributeExtension;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -71,7 +70,7 @@ public class CommentService {
 
 
     @Transactional
-    public CommentResponseDto createComment (Long id,  String text {
+    public CommentResponseDto createComment (Long id,  String text) {
      Member member = memberRepository.findById(
              SecurityUtil.getCurrentMemberId())
              .orElseThrow(() -> new RuntimeException("로그인 유저 정보가 없습니다."));
