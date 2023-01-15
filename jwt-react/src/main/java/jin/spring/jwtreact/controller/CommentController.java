@@ -17,7 +17,7 @@ import java.util.List;
 public class CommentController {
 
 
-    private final CommentService commentService
+    private final CommentService commentService;
 
     @GetMapping("/list")
     public ResponseEntity<List<CommentResponseDto>> getComment(@RequestParam(name = "id") Long id) {

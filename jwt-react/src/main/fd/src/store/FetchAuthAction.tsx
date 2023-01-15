@@ -81,8 +81,8 @@ const PUT = (url : string , data : {} , header:{}) => {
     return response;
 }
 
-const DELETE  = (url : string , data : {} , header:{}) => {
-    const response = fetchAuth({method: 'delete', url , data , header})
+const DELETE  = (url : string ,  header:{}) => {
+    const response = fetchAuth({method: 'delete', url  , header})
     return response;
 }
 
