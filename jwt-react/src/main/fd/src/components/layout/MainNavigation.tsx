@@ -5,7 +5,7 @@ import {Link} from "react-router-dom";
 
 
 // import classes from "*.module.css";
-import AuthContext from "../../store/AuthContext";
+import AuthContext from "../../store/authContext";
 
 
 

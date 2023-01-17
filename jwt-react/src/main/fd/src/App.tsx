@@ -1,12 +1,12 @@
 import React, { useContext } from 'react';
 import {Routes , Route , Navigate} from "react-router-dom";
-import AuthContext from "./store/AuthContext";
+import AuthContext from "./store/authContext";
 
 import Layout from "./components/layout/Layout";
-import AuthPage from "./pages/AuthPage";
-import HomePage from "./pages/HomePage";
-import CreateAccountPage from "./pages/CreateAccountPage";
-import ProfilePage from "./pages/ProfilePage";
+import AuthPage from "./pages/authPage";
+import HomePage from "./pages/homePage";
+import CreateAccountPage from "./pages/createAccountPage";
+import ProfilePage from "./pages/profilePage";
 
 
 

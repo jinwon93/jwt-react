@@ -1,4 +1,4 @@
-import  {GET , POST , PUT , DELETE} from "./FetchAuthAction";
+import  {GET , POST , PUT , DELETE} from "./fetchAuthAction";
 
 interface PostArticle{
 
