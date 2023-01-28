@@ -42,13 +42,55 @@ export  const RecommendContextProvider: React.FC<Props> = (props) => {
     const [isChangeSuccess , setIsChangeSuccess] = useState<boolean>(false);
 
     const getRecommendHandler = (param : string , token?:string) => {
-
+        setIsSuccess(false);
+        const data =  (token ?
+                       recommendAction.getRecommends(param , token )
+                : recommendAction.getRecommends(param));
+        data.then((result) => {
+            if (result !== null) {
+                const recommens:Recommends = result.data;
+                setRecommends(recommens);
+            }
+        })
+        setIsSuccess(true);
     }
 
-    return <RecommendContext>
+    const postRecommendHandler = async  (id : string , token: string) => {
+        setIsSuccess(false);
+        const postData = await recommendAction.makeRecommend(id , token);
+        const msg  = await  postData?.data;
+        const getData = await  recommendAction.getRecommends(id , token)
+        const recommends : Recommends = getData?.data;
+        setRecommends(recommends);
+        setIsChangeSuccess(true);
+    }
+
+    const deleteRecommendHandler = async  (param : string , token: string) => {
+        setIsSuccess(false);
+        const deleteData = await recommendAction.deleteRecommend(param , token);
+        const msg  = await  deleteData?.data;
+
+        const getData = await  recommendAction.getRecommends(param , token)
+        const recommends : Recommends = getData?.data;
+        setRecommends(recommends);
+        setIsChangeSuccess(true);
+    }
 
 
-    </RecommendContext>
+    const contextValue : RecommendCtx  = {
+
+        recommends ,
+        isSuccess ,
+        isChangeSuccess ,
+        getRecommends : getRecommendHandler ,
+        postRecommend : postRecommendHandler ,
+        deleteRecommned : deleteRecommendHandler
+    }
+
+    return
+    <RecommendContext.Provider value={contextValue}>
+        {props.children}
+    </RecommendContext.Provider>
 }
 
 
