@@ -77,20 +77,20 @@ export  const RecommendContextProvider: React.FC<Props> = (props) => {
     }
 
 
-    const contextValue : RecommendCtx  = {
-
-        recommends ,
-        isSuccess ,
-        isChangeSuccess ,
-        getRecommends : getRecommendHandler ,
-        postRecommend : postRecommendHandler ,
-        deleteRecommned : deleteRecommendHandler
+    const contextValue:RecommendCtx = {
+        recommends,
+        isSuccess,
+        isChangeSuccess,
+        getRecommends: getRecommendHandler,
+        postRecommend: postRecommendHandler,
+        deleteRecommned: deleteRecommendHandler
     }
-
-    return
-    <RecommendContext.Provider value={contextValue}>
-        {props.children}
-    </RecommendContext.Provider>
+    return(
+        <RecommendContext.Provider value={contextValue}>
+            {props.children}
+        </RecommendContext.Provider>
+    )
 }
 
 
+export  default RecommendContextProvider;

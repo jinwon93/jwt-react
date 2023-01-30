@@ -1,7 +1,6 @@
 import React , { useState , useEffect , useCallback , useRef} from "react";
 import * as  articleAcion  from  './articleAction';
-import {useNavigate} from "react-router-dom";
-import {set} from "react-hook-form";
+
 
 
 type  Props = {childred? : React.ReactNode}
@@ -11,7 +10,7 @@ type  ArticleInfo = {
     memberNickname : string,
     articleTitle : string ,
     articleBody : string ,
-    creatAt : string ,
+    cratedAt : string ,
     updatedAt? : string ,
     isWritten? : boolean
 };
@@ -58,7 +57,7 @@ const ArticleContext = React.createContext<Ctx>({
 export  const ArticleContextProvider: React.FC<Props> = (props) => {
 
     const [article  , setArticle] = useState<ArticleInfo>();
-    const [page , setPage] = useState<ArticleInfo[]>([]);
+    const [page, setPage] = useState<ArticleInfo[]>([]);
     const [totalPages, setTotalPages] = useState<number>(0);
     const [isSuccess, setIsSuccess] = useState<boolean>(false);
     const [isGetUpdateSuccess, setIsGetUpdateSuccess] = useState<boolean>(false);
