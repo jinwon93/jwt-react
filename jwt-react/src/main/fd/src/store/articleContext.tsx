@@ -3,7 +3,7 @@ import * as  articleAcion  from  './articleAction';
 
 
 
-type  Props = {childred? : React.ReactNode}
+type  Props = {children? : React.ReactNode}
 
 type  ArticleInfo = {
     articleId : number ,
@@ -151,7 +151,7 @@ export  const ArticleContextProvider: React.FC<Props> = (props) => {
     return (
 
         <ArticleContext.Provider value={contextValue}>
-            {props.childred}
+            {props.children}
         </ArticleContext.Provider>
     )
 }

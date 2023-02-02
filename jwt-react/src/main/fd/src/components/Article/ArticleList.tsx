@@ -100,3 +100,6 @@ const ArticleList:React.FC<Props> = (props) => {
         </div>
     )
 }
+
+
+export  default ArticleList;
