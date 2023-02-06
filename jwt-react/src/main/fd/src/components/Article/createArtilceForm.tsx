@@ -51,4 +51,69 @@ const CreateArticleForm:React.FC<Props> = (props) => {
         props.item
         ? articleCtx.updateArticle(authCtx.token , postArticle) : articleCtx.createArticle(postArticle , authCtx.token);
     }
+
+
+    const setUpdateArticleHandler = useCallback(() => {
+        if (articleCtx.isGetUpdateSuccess) {
+            setUpdateArticle({
+                title: articleCtx.article!.articleTitle,
+                body: articleCtx.article!.articleBody
+            })
+        }
+    }, [articleCtx.isGetUpdateSuccess])
+
+    useEffect(() => {
+        if (props.item) {
+            articleCtx.getUpdateArticle(authCtx.token, props.item);
+        }
+    }, [props.item])
+
+    useEffect(() => {
+        console.log('update effect')
+        setUpdateArticleHandler();
+    }, [setUpdateArticleHandler])
+
+    useEffect(() => {
+        if (articleCtx.isSuccess) {
+            console.log("wrting success");
+            navigate("/page/1", { replace: true })
+        }
+    }, [articleCtx.isSuccess])
+
+    return (
+        <div>
+            <Form onSubmit={submitHandler}>
+                <Form.Group>
+                    <Form.Label>제목</Form.Label>
+                    <Form.Control
+                        type="text"
+                        placeholder="제목을 입력하세요"
+                        required
+                        ref={titleRef}
+                        defaultValue={updateArticle.title}
+                    />
+                </Form.Group>
+                <br />
+                <Form.Group>
+                    <Form.Label>본문</Form.Label>
+                    <Form.Control
+                        as="textarea"
+                        rows={20}
+                        required
+                        ref={mainRef}
+                        defaultValue={updateArticle.body}
+                    />
+                </Form.Group>
+                <br />
+                <Button variant="primary">
+                    취소
+                </Button>
+                <Button variant="primary" type="submit">
+                    작성
+                </Button>
+            </Form>
+        </div>
+    );
 }
+
+export  default CreateArticleForm;
