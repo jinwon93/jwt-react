@@ -4,7 +4,7 @@ import { useCallback  , useContext , useState , useEffect} from "react";
 import AuthContext from "../../store/authContext";
 import { Link ,  useNavigate } from "react-router-dom";
 import ArticleContext from "../../store/articleContext";
-import Paging from "./Paging";
+import Paging from "./paging";
 
 
 type  Props = { item : string |  undefined }
